@@ -1,0 +1,14 @@
+{
+  "name": "Fundo Santa Elisa",
+  "short_name": "Santa Elisa",
+  "description": "Parcelas de 5.000 m² en Alto Jahuel, Buin. Con luz y agua, financiamos tu pie.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5EFE3",
+  "theme_color": "#3A472A",
+  "icons": [
+    { "src": "assets/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

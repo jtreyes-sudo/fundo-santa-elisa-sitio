@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /editor-360.html
+
+Sitemap: https://www.fundosantaelisa.cl/sitemap.xml
