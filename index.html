@@ -1842,9 +1842,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
       if(e.detail && e.detail.thirdparty){ play(); }
     });
 
-    /* Si ya había consentido en visitas previas, arranca al primer gesto del usuario */
-    var stored=null; try{ stored=JSON.parse(localStorage.getItem('se_cookies_v1')); }catch(e){}
-    if(stored && stored.thirdparty && !wantsOff){
+    /* Arranca al primer gesto del usuario (nature.mp3 es local, no necesita consentimiento de cookies) */
+    if(!wantsOff){
       window.addEventListener('pointerdown',startOnce,{once:false});
       window.addEventListener('keydown',startOnce,{once:false});
     }
