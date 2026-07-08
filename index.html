@@ -1631,8 +1631,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
      Nota: .tst y .respaldo NO usan .reveal a propósito (quedan siempre visibles, sin depender
      del IntersectionObserver); solo el .sec__head anima como el resto de las secciones. -->
 <style>
-  #confianza .tst{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-  #confianza .tst__card{background:var(--white);border:1px solid rgba(33,69,94,.08);border-radius:6px;padding:32px 30px 28px;display:flex;flex-direction:column;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  #confianza .tst{display:flex;flex-wrap:wrap;justify-content:center;gap:26px}
+  #confianza .tst__card{background:var(--white);border:1px solid rgba(33,69,94,.08);border-radius:6px;padding:32px 30px 28px;display:flex;flex-direction:column;transition:transform .4s var(--ease),box-shadow .4s var(--ease);flex:0 0 calc(33.333% - 18px);min-width:260px}
   #confianza .tst__card:hover{transform:translateY(-6px);box-shadow:0 22px 46px rgba(58,71,42,.13)}
   #confianza .tst__stars{color:var(--gold-soft);font-size:15px;letter-spacing:3px;margin-bottom:14px}
   #confianza .tst__quote{font-family:var(--fserif);font-size:17px;line-height:1.62;color:var(--ink-soft);font-style:italic;flex:1;margin:0}
@@ -1648,8 +1648,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
   #confianza .respaldo__banks{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid var(--paper-edge);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
   #confianza .respaldo__banks .lbl{width:100%;text-align:center;font-family:var(--fsans);font-size:12.5px;color:var(--green-mid);margin-bottom:4px}
   #confianza .respaldo__bank{width:104px;height:44px;border:1px dashed var(--paper-edge);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fsans);font-size:11px;color:var(--sage);background:rgba(255,255,255,.4)}
-  @media(max-width:900px){#confianza .tst{grid-template-columns:1fr 1fr}}
-  @media(max-width:760px){#confianza .tst{grid-template-columns:1fr}#confianza .respaldo{flex-direction:column;text-align:center;padding:30px 24px;gap:22px}#confianza .respaldo__txt{max-width:none}}
+  @media(max-width:900px){#confianza .tst__card{flex:0 0 calc(50% - 14px)}}
+  @media(max-width:760px){#confianza .tst__card{flex:0 0 100%}#confianza .respaldo{flex-direction:column;text-align:center;padding:30px 24px;gap:22px}#confianza .respaldo__txt{max-width:none}}
 </style>
 <section class="sec wrap" id="confianza">
   <div class="sec__head center">
@@ -1668,7 +1668,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
     </figure>
     <figure class="tst__card">
       <div class="tst__stars" aria-hidden="true">★★★★★</div>
-      <blockquote class="tst__quote">«Como familia, tomar la decisión de comprar una propiedad y construirnos nuestra casa es un paso muy importante. Después de evaluar distintas alternativas, decidimos dar ese paso en Fundo Santa Elisa y hoy podemos decir con tranquilidad que fue una excelente decisión. Destacamos la seriedad en el trato y la claridad en cada etapa del proyecto.»</blockquote>
+      <blockquote class="tst__quote">«Como familia, tomar la decisión de comprar una parcela y construirnos nuestra casa es un paso muy importante. Después de evaluar distintas alternativas, decidimos dar ese paso en Fundo Santa Elisa y hoy podemos decir con tranquilidad que fue una excelente decisión. Destacamos la seriedad en el trato y la claridad en cada etapa del proyecto, lo que nos dio mucha confianza en todo momento. Recomendamos Fundo Santa Elisa a quienes estén buscando un lugar donde desarrollar su proyecto de vida con confianza, seguridad y un entorno privilegiado y tranquilo.»</blockquote>
       <figcaption class="tst__who">
         <span class="tst__ini" aria-hidden="true">GV</span>
         <span><span class="tst__name">Gabriel y Valeria</span><span class="tst__meta">Propietarios · Fundo Santa Elisa</span></span>
@@ -1676,10 +1676,26 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
     </figure>
     <figure class="tst__card">
       <div class="tst__stars" aria-hidden="true">★★★★★</div>
-      <blockquote class="tst__quote">«Elegimos Fundo Santa Elisa por su excelente ubicación y accesos. El entorno nos da tranquilidad y nos encantó la propuesta de aire agrícola. Es mucho mejor que un condominio con normas restrictivas que rompen la tranquilidad familiar.»</blockquote>
+      <blockquote class="tst__quote">«Elegimos Fundo Santa Elisa porque tiene una excelente ubicación y accesos. Nos gustó mucho el sector y el entorno nos da tranquilidad. Nos gustó la propuesta de aire agrícola. Es mucho mejor que un condominio con muchas normas restrictivas que rompen la tranquilidad familiar.»</blockquote>
       <figcaption class="tst__who">
         <span class="tst__ini" aria-hidden="true">G</span>
         <span><span class="tst__name">Geraldine</span><span class="tst__meta">Propietaria · Fundo Santa Elisa</span></span>
+      </figcaption>
+    </figure>
+    <figure class="tst__card">
+      <div class="tst__stars" aria-hidden="true">★★★★★</div>
+      <blockquote class="tst__quote">«Elegimos Santa Elisa porque reúne las características que buscábamos como familia para instalarnos: buena ubicación combinando la ruralidad con la conectividad, un proyecto serio con servicios básicos accesibles y un vecindario familiar, de la mano con lo que nosotros queríamos.»</blockquote>
+      <figcaption class="tst__who">
+        <span class="tst__ini" aria-hidden="true">JJ</span>
+        <span><span class="tst__name">Juan de Dios y Josefina</span><span class="tst__meta">Propietarios · Fundo Santa Elisa</span></span>
+      </figcaption>
+    </figure>
+    <figure class="tst__card">
+      <div class="tst__stars" aria-hidden="true">★★★★★</div>
+      <blockquote class="tst__quote">«Fundo Santa Elisa es un proyecto que nos entregó tranquilidad, confianza y proyección. En todo momento respondieron nuestras consultas con claridad, disposición y amabilidad. Valoramos especialmente su entorno y la seriedad con que se desarrolló todo el proceso de compra.»</blockquote>
+      <figcaption class="tst__who">
+        <span class="tst__ini" aria-hidden="true">S</span>
+        <span><span class="tst__name">Sebastián</span><span class="tst__meta">Propietario · Fundo Santa Elisa</span></span>
       </figcaption>
     </figure>
   </div>
