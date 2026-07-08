@@ -2227,14 +2227,14 @@ document.addEventListener('click',function(e){
           // Disponible: verde, clicable; la etiqueta se recolecta para el anti-colisión
           lastDraw[s.id]=pts;
           const col=colorOf(s.estado);
-          ctx.fillStyle=col+(sel?'99':'66'); ctx.fill(); ctx.lineWidth=sel?3:2; ctx.strokeStyle=sel?'#fff':col; ctx.stroke();
+          ctx.fillStyle=col+(sel?'99':'55'); ctx.fill(); ctx.lineWidth=sel?5:3; ctx.strokeStyle=sel?'#fff':'rgba(255,255,255,0.75)'; ctx.stroke();
           const cx=sx/pts.length, cyc=sy/pts.length, t1='N° '+s.id;
           ctx.font='800 '+FS+'px "Alegreya Sans",sans-serif';
           const bw=ctx.measureText(t1).width+11, bh=FS+7;
           labels.push({cx,cyc,t1,col,bw,bh,sel,md});
         } else {
           // No disponible: velo oscuro marcado, sin etiqueta y sin clic (no se agrega a lastDraw)
-          ctx.fillStyle=GRAY+'b3'; ctx.fill(); ctx.lineWidth=1.6; ctx.strokeStyle=GRAY+'f2'; ctx.stroke();
+          ctx.fillStyle=GRAY+'b3'; ctx.fill(); ctx.lineWidth=2.5; ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.stroke();
         }
       });
       // Etiquetas de parcela con anti-colisión: primero la seleccionada y las más
@@ -2316,7 +2316,7 @@ document.addEventListener('click',function(e){
     // Encuadre inicial: lo define encuadre.js (window.SE_VIEW), editable desde editor-360.html.
     const V = window.SE_VIEW || {pitch:-26, yaw:345, hfov:100};
     viewer = pannellum.viewer('pano360', { type:'equirectangular', panorama:'assets/pano-fundo-360.jpg',
-      autoLoad:true, showZoomCtrl:true, showFullscreenCtrl:true, hfov:V.hfov, minHfov:40, maxHfov:130,
+      autoLoad:true, showZoomCtrl:false, showFullscreenCtrl:true, hfov:V.hfov, minHfov:V.hfov, maxHfov:130,
       pitch:V.pitch, yaw:V.yaw, compass:false, backgroundColor:[16,22,12] });
     viewer.on('load', ()=>{ const ph=document.getElementById('v3dPlaceholder'); if(ph) ph.style.display='none'; initFilterLegend(); });
     let dx=0,dy=0;
