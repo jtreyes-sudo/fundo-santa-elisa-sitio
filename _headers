@@ -1,8 +1,5 @@
-# Cabeceras de seguridad para Netlify (se aplican al hacer deploy con esta carpeta).
-# Estas son las cabeceras SEGURAS: no rompen nada del sitio actual.
-# La Content-Security-Policy (CSP) NO se incluye aquí activa porque el sitio usa
-# JS/CSS inline y hay que probarla primero en modo Report-Only en un draft.
-# Ver la seccion "Seguridad tecnica" de PENDIENTES-PRODUCCION.md para el bloque CSP.
+# Cabeceras de seguridad para Netlify.
+# La CSP NO está activa aquí porque el sitio usa JS/CSS inline — probar en Report-Only primero.
 
 /*
   X-Frame-Options: SAMEORIGIN
@@ -12,6 +9,14 @@
   Strict-Transport-Security: max-age=31536000
   Cross-Origin-Opener-Policy: same-origin
 
-# Cache largo para assets estaticos (imagenes, video, audio, fuentes).
+# Cache largo para assets estáticos: imágenes, video, audio, fuentes.
+# "immutable" indica al browser que el archivo nunca cambia con esa URL
+# (si se actualiza un asset, cambiar el nombre o agregar ?v=fecha en el HTML).
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=86400
+
+/*.css
+  Cache-Control: public, max-age=86400
