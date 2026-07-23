@@ -41,3 +41,4 @@ Netlify guarda cada deploy → se puede hacer *rollback* instantáneo desde el d
 > El código fuente editable, el dashboard interno y los scripts viven en el proyecto principal
 > (`~/proyectos-claude/almahue/santa-elisa/`), que **no** se versiona acá por contener datos comerciales sensibles.
 > Este repo es **solo el sitio público desplegable**.
+
