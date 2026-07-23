@@ -32,6 +32,16 @@
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KMZP6BH1H"></script>
 
+<!-- ═══════════ Google Tag Manager · GTM-52CJBCTQ (contenedor de la agencia, 2026-07-21) ═══════════
+     Debe cargar DESPUÉS del bloque de consentimiento de arriba: el default 'denied'
+     ya queda en dataLayer y GTM lo respeta (Consent Mode v2). -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-52CJBCTQ');</script>
+<!-- End Google Tag Manager -->
+
 <!-- ═══════════ SEO · Open Graph · Twitter ═══════════ -->
 <link rel="canonical" href="https://www.fundosantaelisa.cl/">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -92,7 +102,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,500&family=Alegreya+Sans+SC:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-<script defer src="sitios-geo.js?v=20260701"></script>
+<script defer src="sitios-geo.js?v=20260723"></script>
 <script defer src="pois.js?v=20260701"></script>
 <script defer src="encuadre.js?v=20260702c"></script>
 <script defer src="calibracion.js?v=20260701"></script>
@@ -1245,6 +1255,10 @@ src="https://www.facebook.com/tr?id=1044059384802754&ev=PageView&noscript=1"/></
 <!-- End Meta Pixel -->
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52CJBCTQ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- SCROLL PROGRESS -->
 <div class="scroll-prog" id="scrollProg"></div>
@@ -2236,8 +2250,9 @@ document.addEventListener('click',function(e){
       const cy=viewer.getYaw(), cp=viewer.getPitch(), hfov=viewer.getHfov(), f=(W/2)/Math.tan(hfov/2*D2R);
       ctx.lineJoin='round'; ctx.textAlign='center'; ctx.textBaseline='middle';
       const GRAY = '#2b2d24';           // gris oscuro: oscurece marcadamente las no disponibles
-      const FS = W<520?9:10;            // etiquetas más chicas en pantallas angostas
-      const labels=[];                  // se recolectan y se dibujan luego con anti-colisión
+      const FSBASE = W<520?12:14;       // etiquetas más grandes (antes 9/10)
+      const FS = Math.max(8, FSBASE*Math.min(1,100/hfov));  // se achican con el zoom-out para que quepan todas
+      const labels=[];                  // se recolectan y se dibujan todas (sin descartar por solape)
       sitios.forEach(s=>{
         const vs=VERT[s.id]; if(!vs) return;
         const pts=[]; let af=true,sx=0,sy=0;
@@ -2248,28 +2263,23 @@ document.addEventListener('click',function(e){
         const avail=isAvail(s), sel=selId===s.id;
         ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y); for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y); ctx.closePath();
         if(avail){
-          // Disponible: verde, clicable; la etiqueta se recolecta para el anti-colisión
+          // Disponible: verde, clicable; la etiqueta se recolecta para dibujarla después
           lastDraw[s.id]=pts;
           const col=colorOf(s.estado);
           ctx.fillStyle=col+(sel?'99':'55'); ctx.fill(); ctx.lineWidth=sel?5:3; ctx.strokeStyle=sel?'#fff':'rgba(255,255,255,0.75)'; ctx.stroke();
           const cx=sx/pts.length, cyc=sy/pts.length, t1='N° '+s.id;
           ctx.font='800 '+FS+'px "Alegreya Sans",sans-serif';
-          const bw=ctx.measureText(t1).width+11, bh=FS+7;
+          const bw=ctx.measureText(t1).width+11, bh=FS+8;
           labels.push({cx,cyc,t1,col,bw,bh,sel,md});
         } else {
           // No disponible: velo oscuro marcado, sin etiqueta y sin clic (no se agrega a lastDraw)
           ctx.fillStyle=GRAY+'b3'; ctx.fill(); ctx.lineWidth=2.5; ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.stroke();
         }
       });
-      // Etiquetas de parcela con anti-colisión: primero la seleccionada y las más
-      // prominentes (mayor tamaño en pantalla); se omite la que se encimaría con otra
-      // ya colocada. Evita el amontonamiento ilegible en móvil o con vista muy amplia.
-      labels.sort((a,b)=>(b.sel-a.sel)||(b.md-a.md));
-      const placed=[];
+      // Todas las etiquetas se dibujan siempre; se ordenan para que la seleccionada
+      // y las más prominentes (mayor tamaño en pantalla) queden por encima si se solapan.
+      labels.sort((a,b)=>(a.sel-b.sel)||(a.md-b.md));
       for(const L of labels){
-        const x0=L.cx-L.bw/2-2, y0=L.cyc-L.bh/2-2, x1=L.cx+L.bw/2+2, y1=L.cyc+L.bh/2+2;
-        if(!L.sel){ let hit=false; for(const r of placed){ if(x0<r.x1&&x1>r.x0&&y0<r.y1&&y1>r.y0){hit=true;break;} } if(hit) continue; }
-        placed.push({x0,y0,x1,y1});
         ctx.fillStyle='rgba(0,0,0,.62)'; ctx.beginPath();
         if(ctx.roundRect) ctx.roundRect(L.cx-L.bw/2,L.cyc-L.bh/2,L.bw,L.bh,6); else ctx.rect(L.cx-L.bw/2,L.cyc-L.bh/2,L.bw,L.bh);
         ctx.fill(); ctx.strokeStyle=L.col; ctx.lineWidth=1; ctx.stroke();
@@ -2386,8 +2396,7 @@ document.addEventListener('click',function(e){
     var sbFill=document.querySelector('.sold-bar__fill'); if(sbFill) sbFill.style.width=soldPct+'%';
     var sbLabel=document.querySelector('.sold-bar__label'); if(sbLabel) sbLabel.innerHTML=soldPct+'% vendido · quedan <span id="kpiDisp">'+disp.length+'</span> parcelas';
     if(desde){
-      var elVal=document.getElementById('kpiValDesde'); if(elVal) elVal.textContent='desde UF '+fmt(desde);
-      var elUF=document.getElementById('kpiUF'); if(elUF){ elUF.dataset.count=Math.round(desde); if(elUF.textContent.trim()!=='0') elUF.textContent=fmt(desde); }
+      // kpiValDesde queda fijo en "desde UF 4.640" (piso de venta oficial) - no se recalcula con el mínimo real, que puede bajar por parcelas puntuales.
     }
   }
   function applyState(state){
